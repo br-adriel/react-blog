@@ -3,6 +3,10 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   :root {
     font-size: 16px;
+    --primary-color: #0072E7;
+    --secondary-color: #8338EC;
+
+    accent-color: var(--primary-color);
   }
 
   *,
@@ -121,10 +125,63 @@ const GlobalStyle = createGlobalStyle`
   select,
   option {
     font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
   }
 
   body {
     background: #F5F5FA;
+  }
+
+  input, textarea, select, option {
+    background-color: #fff;
+    border: 1px solid #ededed;
+    caret-color: var(--primary-color);
+    border-radius: 8px;
+    padding: 8px;
+    transition: all 0.3s ease-out;
+  }
+  
+  input:focus, textarea:focus, select:focus, option:focus {
+   outline-color: var(--primary-color);
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  a {
+    display: inline-block;
+    color: var(--primary-color);
+    text-decoration: none;
+
+    :hover {
+      text-decoration: underline;
+    }
+ 
+    :visited {
+      color: var(--secondary-color);
+    }
+  }
+  
+
+  button, .btn {
+    border: none;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .3s ease-out;
+
+    :hover {
+      background-color: var(--secondary-color);
+    }
   }
 `;
 

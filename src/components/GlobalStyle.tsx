@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  :root {
+    font-size: 16px;
+  }
+
   *,
   *:before,
   *:after {
@@ -117,6 +121,10 @@ const GlobalStyle = createGlobalStyle`
   select,
   option {
     font-family: 'Outfit', sans-serif;
+  }
+
+  body {
+    background: #F5F5FA;
   }
 `;
 

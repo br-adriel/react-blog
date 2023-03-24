@@ -1,10 +1,15 @@
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthFormLayout from '../components/AuthFormLayout';
 import Form from '../components/Form';
 import FormGroup from '../components/FormGroup';
+import { selectUser } from '../features/userSlice';
 
 const SignUp = () => {
+  const { token } = useSelector(selectUser);
+
+  if (token) return <Navigate to='/' />;
   return (
     <AuthFormLayout>
       <Content>

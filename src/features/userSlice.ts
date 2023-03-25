@@ -1,18 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
 import { RootState } from '../store';
-
-interface UserProfile {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-
-interface UserState {
-  token: string | null;
-  refreshToken: string | null;
-  profile: null | UserProfile;
-}
+import { UserProfile, UserState } from '../types/userSlice';
 
 const initialState: UserState = {
   token: null,

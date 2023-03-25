@@ -15,4 +15,5 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
   commentsCount: number;
+  image?: string;
 }

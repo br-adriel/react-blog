@@ -29,7 +29,7 @@ dayjs.updateLocale('pt-br', {
 const Post = ({ post }: IProps) => {
   return (
     <Wrapper to={`/posts/${post._id}`}>
-      <img src='' alt='' />
+      <img src={post.image} alt='' />
       <div>
         <div>
           <h2>{post.title}</h2>

@@ -1,7 +1,7 @@
-import { Post } from './posts';
+import { PostWithoutContent } from './posts';
 
 export interface GetPostsResponse {
-  posts: Post[];
+  posts: PostWithoutContent[];
   page: number;
   prev?: string;
   next?: string;

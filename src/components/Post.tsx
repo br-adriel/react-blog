@@ -1,30 +1,12 @@
+import dayjs from 'dayjs';
 import { Clock } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Post as IPost } from '../types/posts';
-import dayjs from 'dayjs';
+import { PostWithoutContent } from '../types/posts';
 
 interface IProps {
-  post: IPost;
+  post: PostWithoutContent;
 }
-
-dayjs.updateLocale('pt-br', {
-  relativeTime: {
-    future: 'em %s',
-    past: 'há %s',
-    s: 'poucos segundos',
-    m: '%d min',
-    mm: '%d min',
-    h: '%d h',
-    hh: '%d h',
-    d: '%d d',
-    dd: '%d d',
-    M: '%d m',
-    MM: '%d m',
-    y: '%d a',
-    yy: '%d a',
-  },
-});
 
 const Post = ({ post }: IProps) => {
   return (

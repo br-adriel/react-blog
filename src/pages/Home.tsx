@@ -6,12 +6,12 @@ import PaginationButtons from '../components/PaginationButtons';
 import Post from '../components/Post';
 import PostGrid from '../components/PostGrid';
 import { api } from '../lib/axios';
-import { Post as IPost } from '../types/posts';
+import { PostWithoutContent } from '../types/posts';
 import { GetPostsResponse } from '../types/responses';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
-  const [posts, setPosts] = useState<IPost[] | null>(null);
+  const [posts, setPosts] = useState<PostWithoutContent[] | null>(null);
   const [prevLink, setPrevLink] = useState<string>();
   const [nextLink, setNextLink] = useState<string>();
 

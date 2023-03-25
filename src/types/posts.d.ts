@@ -7,7 +7,7 @@ export interface PostAuthor {
   isAuthor: boolean;
 }
 
-export interface Post {
+export interface PostWithoutContent {
   _id: string;
   author: PostAuthor;
   title: string;
@@ -16,4 +16,8 @@ export interface Post {
   updatedAt: string;
   commentsCount: number;
   image?: string;
+}
+
+export interface PostWithContent extends PostWithContent {
+  content: string;
 }

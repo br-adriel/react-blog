@@ -7,7 +7,8 @@ import Form from '../components/Form';
 import FormGroup from '../components/FormGroup';
 import { selectUser, setCredentials } from '../features/userSlice';
 import { api } from '../lib/axios';
-import { storeRefeshToken, storeToken } from '../utils/auth';
+import { UserState } from '../types/userSlice';
+import { storeRefeshToken, storeToken, storeUserProfile } from '../utils/auth';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -23,10 +24,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const { data } = await api.post<{
-        token?: string;
-        refreshToken?: string;
-      }>('/users', {
+      const { data } = await api.post<UserState>('/users', {
         firstName,
         lastName,
         email,
@@ -34,21 +32,18 @@ const SignUp = () => {
         password2,
       });
 
-      if (data.token && data.refreshToken) {
+      if (data.token && data.refreshToken && data.profile) {
         dispatch(
           setCredentials({
             token: data.token,
-            profile: {
-              email: email,
-              firstName: firstName,
-              lastName: lastName,
-            },
+            profile: data.profile,
             refreshToken: data.refreshToken,
           })
         );
 
         storeToken(data.token);
         storeRefeshToken(data.refreshToken);
+        storeUserProfile(data.profile);
 
         navigate('/');
       }

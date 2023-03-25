@@ -2,15 +2,24 @@ import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const PaginationButtons = () => {
+interface IProps {
+  linkPrev?: string;
+  linkNext?: string;
+}
+
+const PaginationButtons = ({ linkNext, linkPrev }: IProps) => {
   return (
     <Wrapper>
-      <Link className='btn' to={''}>
-        <ArrowLeft title='Posts anteriores' />
-      </Link>
-      <Link className='btn' to={''}>
-        <ArrowRight title='Posts posteriores' />
-      </Link>
+      {!linkPrev ? null : (
+        <Link className='btn' to={linkPrev}>
+          <ArrowLeft title='Posts anteriores' />
+        </Link>
+      )}
+      {!linkNext ? null : (
+        <Link className='btn' to={linkNext}>
+          <ArrowRight title='Posts posteriores' />
+        </Link>
+      )}
     </Wrapper>
   );
 };

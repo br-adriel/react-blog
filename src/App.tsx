@@ -8,6 +8,7 @@ import {
   getStoredToken,
   getStoredUserProfile,
 } from './utils/auth';
+import './lib/dayjs';
 
 function App() {
   const dispatch = useDispatch();

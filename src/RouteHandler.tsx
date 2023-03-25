@@ -11,14 +11,7 @@ const RouteHandler = () => {
     <HashRouter>
       <Routes>
         <Route path='/' element={<App />}>
-          <Route
-            path=''
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
+          <Route path='' element={<Home />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<SignUp />} />
         </Route>

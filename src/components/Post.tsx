@@ -1,19 +1,43 @@
 import { Clock } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Post as IPost } from '../types/posts';
+import dayjs from 'dayjs';
 
-const Post = () => {
+interface IProps {
+  post: IPost;
+}
+
+dayjs.updateLocale('pt-br', {
+  relativeTime: {
+    future: 'em %s',
+    past: 'há %s',
+    s: 'poucos segundos',
+    m: '%d min',
+    mm: '%d min',
+    h: '%d h',
+    hh: '%d h',
+    d: '%d d',
+    dd: '%d d',
+    M: '%d m',
+    MM: '%d m',
+    y: '%d a',
+    yy: '%d a',
+  },
+});
+
+const Post = ({ post }: IProps) => {
   return (
-    <Wrapper to=''>
+    <Wrapper to={`/posts/${post._id}`}>
       <img src='' alt='' />
       <div>
         <div>
-          <h2>Titulo</h2>
-          <h3>Autor</h3>
+          <h2>{post.title}</h2>
+          <h3>{post.author.firstName + ' ' + post.author.lastName}</h3>
         </div>
         <PostDate>
           <Clock />
-          <p>10d</p>
+          <p>{dayjs(post.createdAt).fromNow(true)}</p>
         </PostDate>
       </div>
     </Wrapper>

@@ -1,27 +1,71 @@
-import { useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthFormLayout from '../components/AuthFormLayout';
 import Form from '../components/Form';
 import FormGroup from '../components/FormGroup';
-import { selectUser } from '../features/userSlice';
+import { selectUser, setCredentials } from '../features/userSlice';
+import { api } from '../lib/axios';
+import { UserState } from '../types/userSlice';
+import { storeRefeshToken, storeToken, storeUserProfile } from '../utils/auth';
 
 const Login = () => {
-  const { token } = useSelector(selectUser);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const formSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await api.post<UserState>('/users/authenticate', {
+        email,
+        password,
+      });
+
+      if (data.token && data.refreshToken && data.profile) {
+        dispatch(
+          setCredentials({
+            token: data.token,
+            refreshToken: data.refreshToken,
+            profile: data.profile,
+          })
+        );
+
+        storeToken(data.token);
+        storeRefeshToken(data.refreshToken);
+        storeUserProfile(data.profile);
+
+        navigate('/');
+        return;
+      }
+
+      setPassword('');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const { token } = useSelector(selectUser);
   if (token) return <Navigate to='/' />;
   return (
     <AuthFormLayout>
       <Content>
         <h2>Entrar</h2>
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault;
-          }}
-        >
+        <Form onSubmit={formSubmit}>
           <FormGroup>
             <label htmlFor='email'>Email:</label>
-            <input type='email' name='email' id='email' required />
+            <input
+              type='email'
+              name='email'
+              id='email'
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </FormGroup>
           <FormGroup>
             <label htmlFor='password'>Senha:</label>
@@ -31,6 +75,8 @@ const Login = () => {
               id='password'
               required
               minLength={8}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </FormGroup>
           <FormGroup>

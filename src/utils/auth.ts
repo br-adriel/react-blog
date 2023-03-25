@@ -14,11 +14,11 @@ export function storeToken(token: string) {
 }
 
 export function getStoredRefeshToken() {
-  localStorage.getItem('refreshToken');
+  return localStorage.getItem('refreshToken');
 }
 
 export function getStoredToken() {
-  localStorage.getItem('token');
+  return localStorage.getItem('token');
 }
 
 export function getStoredUserProfile(): UserProfile | null {

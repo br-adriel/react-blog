@@ -18,6 +18,6 @@ export interface PostWithoutContent {
   image?: string;
 }
 
-export interface PostWithContent extends PostWithContent {
+export interface PostWithContent extends PostWithoutContent {
   content: string;
 }

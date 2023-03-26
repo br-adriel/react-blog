@@ -9,6 +9,7 @@ import {
   getStoredUserProfile,
 } from './utils/auth';
 import './lib/dayjs';
+import Header from './components/Header';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
+      <Header />
       <Outlet />
     </>
   );

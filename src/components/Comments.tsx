@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { selectComments, setComments } from '../features/commentsSlice';
 import { api } from '../lib/axios';
-import { Comment as IComment } from '../types/comments';
 import { GetCommentsResponse } from '../types/responses';
 import Comment from './Comment';
 import PaginationButtons from './PaginationButtons';
@@ -11,24 +12,30 @@ interface IProps {
 }
 
 const Comments = ({ postId }: IProps) => {
-  const [comments, setComments] = useState<IComment[] | null>();
-  const [nextLink, setNextLink] = useState<string>();
-  const [prevLink, setPrevLink] = useState<string>();
+  const { comments, prev, next } = useSelector(selectComments);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     api
       .get<GetCommentsResponse>(`posts/${postId}/comments`)
       .then((res) => {
-        setComments(res.data.comments);
-        if (res.data.prev) {
-          setPrevLink(res.data.prev);
-        }
-        if (res.data.next) {
-          setNextLink(res.data.next);
-        }
+        dispatch(
+          setComments({
+            comments: res.data.comments,
+            next: res.data.next || null,
+            prev: res.data.prev || null,
+          })
+        );
       })
       .catch((err) => {
-        setComments(null);
+        dispatch(
+          setComments({
+            comments: null,
+            prev: null,
+            next: null,
+          })
+        );
       });
   }, []);
 
@@ -42,7 +49,10 @@ const Comments = ({ postId }: IProps) => {
           <Comment comment={c} key={c._id} />
         ))}
       </div>
-      <PaginationButtons linkNext={nextLink} linkPrev={prevLink} />
+      <PaginationButtons
+        linkNext={next || undefined}
+        linkPrev={prev || undefined}
+      />
     </Wrapper>
   );
 };

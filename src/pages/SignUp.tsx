@@ -8,7 +8,7 @@ import FormGroup from '../components/FormGroup';
 import { selectUser, setCredentials } from '../features/userSlice';
 import { api } from '../lib/axios';
 import { UserState } from '../types/userSlice';
-import { storeRefeshToken, storeToken, storeUserProfile } from '../utils/auth';
+import { storeRefreshToken, storeToken, storeUserProfile } from '../utils/auth';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -42,7 +42,7 @@ const SignUp = () => {
         );
 
         storeToken(data.token);
-        storeRefeshToken(data.refreshToken);
+        storeRefreshToken(data.refreshToken);
         storeUserProfile(data.profile);
 
         navigate('/');

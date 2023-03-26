@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import GlobalStyle from './components/GlobalStyle';
 import { setCredentials } from './features/userSlice';
 import {
-  getStoredRefeshToken,
+  getStoredRefreshToken,
   getStoredToken,
   getStoredUserProfile,
 } from './utils/auth';
@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     const token = getStoredToken();
-    const refreshToken = getStoredRefeshToken();
+    const refreshToken = getStoredRefreshToken();
     const profile = getStoredUserProfile();
 
     if (token && refreshToken && profile) {

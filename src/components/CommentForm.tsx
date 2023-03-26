@@ -1,12 +1,12 @@
-import { isAxiosError } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { clearTokens, selectUser, setToken } from '../features/userSlice';
+import { addComment } from '../features/commentsSlice';
+import { selectUser } from '../features/userSlice';
 import { api } from '../lib/axios';
-import { reauthenticate, storeToken } from '../utils/auth';
+import { Comment } from '../types/comments';
 import Form from './Form';
 import FormGroup from './FormGroup';
 
@@ -22,7 +22,7 @@ const CommentForm = ({ postId }: IProps) => {
   const navigate = useNavigate();
 
   const postComment = () => {
-    return api.post(
+    return api.post<{ comment: Comment }>(
       `posts/${postId}/comments`,
       {
         content,
@@ -41,27 +41,20 @@ const CommentForm = ({ postId }: IProps) => {
     postComment()
       .then((res) => {
         setContent('');
+        dispatch(addComment(res.data.comment));
       })
       .catch((error) => {
-        if (isAxiosError(error) && error.response) {
+        if (error.response) {
           if (error.response.status === StatusCodes.UNAUTHORIZED) {
-            reauthenticate(refreshToken!).then((newToken) => {
-              if (newToken) {
-                dispatch(setToken({ token: newToken }));
-                storeToken(newToken);
-                postComment();
-                setContent('');
-              } else {
-                dispatch(clearTokens());
-                navigate('/login');
-              }
-            });
+            postComment()
+              .then((res) => dispatch(addComment(res.data.comment)))
+              .catch((err) => navigate('/login'));
           }
-        }
 
-        if (error.response.errors) {
-          const errors = error.response.errors;
-          console.log(errors);
+          if (error.response.errors) {
+            const errors = error.response.errors;
+            console.log(errors);
+          }
         }
       });
   };

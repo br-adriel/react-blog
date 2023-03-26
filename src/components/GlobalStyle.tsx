@@ -145,6 +145,10 @@ const GlobalStyle = createGlobalStyle`
    outline-color: var(--primary-color);
   }
 
+  textarea {
+    resize: vertical;
+  }
+
   h2 {
     font-size: 2rem;
     font-weight: 600;

@@ -1,3 +1,4 @@
+import { api } from '../lib/axios';
 import { UserProfile } from '../types/userSlice';
 
 export function storeUserProfile(profile: UserProfile) {
@@ -28,4 +29,20 @@ export function getStoredUserProfile(): UserProfile | null {
     return profile as UserProfile;
   }
   return null;
+}
+
+export async function reauthenticate(refreshToken: string) {
+  try {
+    const res = await api.post<{ token: string }>(
+      'users/authenticate/refresh',
+      {
+        headers: {
+          Authorization: 'Bearer ' + refreshToken,
+        },
+      }
+    );
+    return res.data.token;
+  } catch (err) {
+    return null;
+  }
 }

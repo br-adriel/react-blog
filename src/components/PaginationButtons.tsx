@@ -1,24 +1,23 @@
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface IProps {
-  linkPrev?: string;
-  linkNext?: string;
+  prev?: Function;
+  next?: Function;
 }
 
-const PaginationButtons = ({ linkNext, linkPrev }: IProps) => {
+const PaginationButtons = ({ prev, next }: IProps) => {
   return (
     <Wrapper>
-      {!linkPrev ? null : (
-        <Link className='btn' to={linkPrev}>
-          <ArrowLeft title='Posts anteriores' />
-        </Link>
+      {!prev ? null : (
+        <button type='button' onClick={() => prev()}>
+          <ArrowLeft title='Anterior' />
+        </button>
       )}
-      {!linkNext ? null : (
-        <Link className='btn' to={linkNext}>
-          <ArrowRight title='Posts posteriores' />
-        </Link>
+      {!next ? null : (
+        <button type='button' onClick={() => next()}>
+          <ArrowRight title='Próximo' />
+        </button>
       )}
     </Wrapper>
   );

@@ -20,9 +20,20 @@ const Comments = ({ postId }: IProps) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const clickPrev = () => {
+    if (prev) {
+      getPosts(prev);
+    }
+  };
+  const clickNext = () => {
+    if (next) {
+      getPosts(next);
+    }
+  };
+
+  const getPosts = (link: string) => {
     api
-      .get<GetCommentsResponse>(`posts/${postId}/comments`)
+      .get<GetCommentsResponse>(link)
       .then((res) => {
         dispatch(
           setComments({
@@ -41,6 +52,10 @@ const Comments = ({ postId }: IProps) => {
           })
         );
       });
+  };
+
+  useEffect(() => {
+    getPosts(`/posts/${postId}/comments`);
 
     return () => {
       dispatch(clearComments());
@@ -53,13 +68,15 @@ const Comments = ({ postId }: IProps) => {
     <Wrapper>
       <h3>Comentários</h3>
       <div>
-        {comments.map((c) => (
-          <Comment comment={c} key={c._id} />
-        ))}
+        {comments.length ? (
+          comments.map((c) => <Comment comment={c} key={c._id} />)
+        ) : (
+          <p>Nenhum comentário</p>
+        )}
       </div>
       <PaginationButtons
-        linkNext={next || undefined}
-        linkPrev={prev || undefined}
+        prev={prev ? clickPrev : undefined}
+        next={next ? clickNext : undefined}
       />
     </Wrapper>
   );

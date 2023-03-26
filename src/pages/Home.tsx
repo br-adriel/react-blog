@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Container from '../components/Container';
 import PaginationButtons from '../components/PaginationButtons';
@@ -16,6 +16,19 @@ const Home = () => {
   const [nextLink, setNextLink] = useState<string>();
 
   const pageNumber = searchParams.get('page');
+  const navigate = useNavigate();
+
+  const clickPrev = () => {
+    if (prevLink) {
+      navigate(prevLink);
+    }
+  };
+
+  const clickNext = () => {
+    if (nextLink) {
+      navigate(nextLink);
+    }
+  };
 
   useEffect(() => {
     api.get<GetPostsResponse>(`posts?page=${pageNumber ?? 1}`).then((res) => {
@@ -34,7 +47,10 @@ const Home = () => {
             <Post post={post} key={post._id} />
           ))}
         </PostGrid>
-        <PaginationButtons linkNext={nextLink} linkPrev={prevLink} />
+        <PaginationButtons
+          prev={prevLink ? clickPrev : undefined}
+          next={nextLink ? clickNext : undefined}
+        />
       </Wrapper>
     </Section>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CommentForm from '../components/CommentForm';
 import Comments from '../components/Comments';
@@ -52,7 +52,17 @@ const Post = () => {
       <Wrapper>
         <PostVisualizer post={post} />
         <CommentSection>
-          <div>{token ? <CommentForm postId={post._id} /> : <div />}</div>
+          <div>
+            {token ? (
+              <CommentForm postId={post._id} />
+            ) : (
+              <div>
+                <p>
+                  <Link to={'/login'}>Faça login</Link> para comentar
+                </p>
+              </div>
+            )}
+          </div>
           <Comments postId={post._id} />
         </CommentSection>
       </Wrapper>

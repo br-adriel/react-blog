@@ -176,12 +176,15 @@ const GlobalStyle = createGlobalStyle`
 
   button, .btn {
     border: none;
-    padding: 8px 16px;
+    padding: 8px 12px;
     background-color: var(--primary-color);
     color: #fff;
     border-radius: 8px;
     cursor: pointer;
     transition: all .3s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     :hover {
       background-color: var(--secondary-color);

@@ -1,14 +1,13 @@
-import { isAxiosError } from 'axios';
 import dayjs from 'dayjs';
 import { StatusCodes } from 'http-status-codes';
 import { Clock, Trash } from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { clearTokens, selectUser, setToken } from '../features/userSlice';
+import { removeComment as removeCommentFromState } from '../features/commentsSlice';
+import { selectUser } from '../features/userSlice';
 import { api } from '../lib/axios';
 import { Comment as IComment } from '../types/comments';
-import { reauthenticate, storeToken } from '../utils/auth';
 
 interface IProps {
   comment: IComment;
@@ -16,7 +15,7 @@ interface IProps {
 
 const Comment = ({ comment }: IProps) => {
   const { profile } = useSelector(selectUser);
-  const { token, refreshToken } = useSelector(selectUser);
+  const { token } = useSelector(selectUser);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,26 +30,18 @@ const Comment = ({ comment }: IProps) => {
 
   const clickButton = () => {
     removeComment()
-      .then()
+      .then((res) => {
+        dispatch(removeCommentFromState({ id: comment._id }));
+      })
       .catch((error) => {
-        if (isAxiosError(error) && error.response) {
+        if (error.response) {
           if (error.response.status === StatusCodes.UNAUTHORIZED) {
-            reauthenticate(refreshToken!).then((newToken) => {
-              if (newToken) {
-                dispatch(setToken({ token: newToken }));
-                storeToken(newToken);
-                removeComment();
-              } else {
-                dispatch(clearTokens());
-                navigate('/login');
-              }
-            });
+            removeComment()
+              .then((res) =>
+                dispatch(removeCommentFromState({ id: comment._id }))
+              )
+              .catch((err) => navigate('/login'));
           }
-        }
-
-        if (error.response.errors) {
-          const errors = error.response.errors;
-          console.log(errors);
         }
       });
   };

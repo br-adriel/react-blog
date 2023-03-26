@@ -8,6 +8,7 @@ import Container from '../components/Container';
 import PostVisualizer from '../components/PostVisualizer';
 import { selectUser } from '../features/userSlice';
 import { api } from '../lib/axios';
+import { Comment } from '../types/comments';
 import { PostWithContent } from '../types/posts';
 
 const Post = () => {

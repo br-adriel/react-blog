@@ -70,7 +70,7 @@ const CommentForm = ({ postId }: IProps) => {
     <Form onSubmit={submitForm}>
       <FormGroup>
         <Label htmlFor='comment'>Deixe um comentário</Label>
-        <textarea
+        <Textarea
           name='comment'
           id='comment'
           cols={30}
@@ -80,7 +80,7 @@ const CommentForm = ({ postId }: IProps) => {
           }`}
           onChange={(e) => setContent(e.target.value)}
           value={content}
-        ></textarea>
+        ></Textarea>
       </FormGroup>
       <button type='submit'>Comentar</button>
     </Form>
@@ -91,6 +91,10 @@ const Label = styled.label`
   font-weight: 600;
   font-size: 21px;
   line-height: 26px;
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
 `;
 
 export default CommentForm;

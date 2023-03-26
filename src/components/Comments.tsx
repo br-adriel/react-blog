@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { selectComments, setComments } from '../features/commentsSlice';
+import {
+  clearComments,
+  selectComments,
+  setComments,
+} from '../features/commentsSlice';
 import { api } from '../lib/axios';
 import { GetCommentsResponse } from '../types/responses';
 import Comment from './Comment';
@@ -37,6 +41,10 @@ const Comments = ({ postId }: IProps) => {
           })
         );
       });
+
+    return () => {
+      dispatch(clearComments());
+    };
   }, []);
 
   if (comments === null) return <h3>Erro ao carregar comentários</h3>;

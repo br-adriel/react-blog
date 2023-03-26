@@ -1,5 +1,22 @@
 import axios from 'axios';
+import { StatusCodes } from 'http-status-codes';
+import { getStoredToken, refreshToken } from '../utils/auth';
 
-export const api = axios.create({
+const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
+
+api.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (err) => {
+    const token = getStoredToken();
+    if (err.response.status === StatusCodes.UNAUTHORIZED && token) {
+      refreshToken();
+    }
+    return Promise.reject(err);
+  }
+);
+
+export { api };

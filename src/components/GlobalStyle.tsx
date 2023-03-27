@@ -172,7 +172,6 @@ const GlobalStyle = createGlobalStyle`
       color: var(--secondary-color);
     }
   }
-  
 
   button, .btn {
     border: none;

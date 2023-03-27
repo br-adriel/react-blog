@@ -54,12 +54,10 @@ export function refreshToken() {
       .then(async (res) => {
         storeToken(res.data.token);
         store.dispatch(setToken({ token: res.data.token }));
-        return res;
       })
       .catch((err) => {
         clearStoredUser();
         store.dispatch(clearTokens());
-        return err;
       });
   } else {
     clearStoredUser();

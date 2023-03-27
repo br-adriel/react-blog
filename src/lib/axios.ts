@@ -7,9 +7,7 @@ const api = axios.create({
 });
 
 api.interceptors.response.use(
-  (res) => {
-    return res;
-  },
+  (res) => res,
   (err) => {
     const token = getStoredToken();
     if (err.response.status === StatusCodes.UNAUTHORIZED && token) {

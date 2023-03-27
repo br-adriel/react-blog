@@ -14,7 +14,7 @@ const Header = () => {
         <nav>
           <NavList>
             <li>
-              <Link to='' className='btn'>
+              <Link to='/posts/new' className='btn'>
                 Novo post
               </Link>
             </li>

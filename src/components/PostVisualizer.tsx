@@ -23,7 +23,7 @@ const PostVisualizer = ({ post }: IProps) => {
         </PostTitle>
       </PostTop>
       <PostContent>
-        <div>{post.content}</div>
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
         <p>Publicado em {dayjs(post.createdAt).format('DD/MM/YYYY')}</p>
       </PostContent>
     </Wrapper>
@@ -86,6 +86,24 @@ const PostContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  h5,
+  h6 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
 `;
 
 export default PostVisualizer;

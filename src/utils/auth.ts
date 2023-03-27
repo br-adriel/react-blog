@@ -40,14 +40,14 @@ export function clearStoredUser() {
 }
 
 export function refreshToken() {
-  const REFRESH_TOKEN = getStoredRefreshToken();
+  const REFRESH_TOKEN = store.getState().user.refreshToken;
   if (REFRESH_TOKEN) {
     axios
       .post<{ token: string }>(
-        import.meta.env.VITE_API_URL + '/users/authenticate/refresh',
+        import.meta.env.VITE_API_URL + 'users/authenticate/refresh',
         {
           headers: {
-            Authorization: 'Bearer ' + REFRESH_TOKEN,
+            authorization: 'Bearer ' + REFRESH_TOKEN,
           },
         }
       )

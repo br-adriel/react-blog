@@ -40,7 +40,9 @@ const NavList = styled.ul`
   display: flex;
   gap: 8px;
 
-  a {
+  a,
+  a:hover,
+  a:visited {
     color: #fff;
     text-decoration: none;
   }

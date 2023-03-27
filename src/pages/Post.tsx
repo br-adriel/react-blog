@@ -8,13 +8,12 @@ import Container from '../components/Container';
 import PostVisualizer from '../components/PostVisualizer';
 import { selectUser } from '../features/userSlice';
 import { api } from '../lib/axios';
-import { Comment } from '../types/comments';
 import { PostWithContent } from '../types/posts';
 
 const Post = () => {
   const [post, setPost] = useState<PostWithContent | null>();
 
-  const { token } = useSelector(selectUser);
+  const { profile } = useSelector(selectUser);
   const { id } = useParams();
 
   useEffect(() => {
@@ -53,13 +52,13 @@ const Post = () => {
         <PostVisualizer post={post} />
         <CommentSection>
           <div>
-            {token ? (
+            {profile ? (
               <CommentForm postId={post._id} />
             ) : (
               <div>
-                <p>
+                <h3>
                   <Link to={'/login'}>Faça login</Link> para comentar
-                </p>
+                </h3>
               </div>
             )}
           </div>
@@ -86,10 +85,13 @@ const Wrapper = styled(Container)`
 `;
 
 const CommentSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
   @media screen and (min-width: 768px) {
     width: 100%;
-    display: flex;
-    gap: 24px;
+    flex-direction: row;
     justify-content: flex-start;
 
     > div {

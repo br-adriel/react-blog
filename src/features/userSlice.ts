@@ -4,8 +4,6 @@ import { RootState } from '../store';
 import { UserProfile, UserState } from '../types/userSlice';
 
 const initialState: UserState = {
-  token: null,
-  refreshToken: null,
   profile: null,
 };
 
@@ -13,42 +11,16 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setCredentials(
-      state,
-      action: PayloadAction<{
-        token: string;
-        refreshToken: string;
-        profile: UserProfile;
-      }>
-    ) {
-      state.token = action.payload.token;
-      state.refreshToken = action.payload.refreshToken;
-      state.profile = action.payload.profile;
-    },
-    setToken(state, action: PayloadAction<{ token: string }>) {
-      state.token = action.payload.token;
-    },
-    setRefreshToken(state, action: PayloadAction<{ refreshToken: string }>) {
-      state.refreshToken = action.payload.refreshToken;
-    },
     setProfile(state, action: PayloadAction<{ profile: UserProfile }>) {
       state.profile = action.payload.profile;
     },
-    clearTokens(state) {
-      state.refreshToken = null;
-      state.token = null;
+    clearProfile(state) {
       state.profile = null;
     },
   },
 });
 
-export const {
-  clearTokens,
-  setCredentials,
-  setRefreshToken,
-  setToken,
-  setProfile,
-} = userSlice.actions;
+export const { clearProfile, setProfile } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 

@@ -7,7 +7,5 @@ export interface UserProfile {
 }
 
 export interface UserState {
-  token: string | null;
-  refreshToken: string | null;
   profile: null | UserProfile;
 }

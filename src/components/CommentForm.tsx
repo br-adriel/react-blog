@@ -1,4 +1,3 @@
-import { StatusCodes } from 'http-status-codes';
 import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -15,47 +14,25 @@ interface IProps {
 }
 
 const CommentForm = ({ postId }: IProps) => {
-  const { profile, refreshToken, token } = useSelector(selectUser);
+  const { profile } = useSelector(selectUser);
   const [content, setContent] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const postComment = () => {
-    return api.post<{ comment: Comment }>(
-      `posts/${postId}/comments`,
-      {
-        content,
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      }
-    );
-  };
-
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    postComment()
+    api
+      .post<{ comment: Comment }>(`posts/${postId}/comments`, {
+        content,
+      })
       .then((res) => {
         setContent('');
         dispatch(addComment(res.data.comment));
       })
       .catch((error) => {
-        if (error.response) {
-          if (error.response.status === StatusCodes.UNAUTHORIZED) {
-            postComment()
-              .then((res) => dispatch(addComment(res.data.comment)))
-              .catch((err) => navigate('/login'));
-          }
-
-          if (error.response.errors) {
-            const errors = error.response.errors;
-            console.log(errors);
-          }
-        }
+        console.log(error);
       });
   };
 

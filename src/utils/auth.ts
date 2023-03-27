@@ -1,6 +1,3 @@
-import axios from 'axios';
-import { clearTokens, setToken } from '../features/userSlice';
-import store from '../store';
 import { UserProfile } from '../types/userSlice';
 
 export function storeUserProfile(profile: UserProfile) {
@@ -37,30 +34,4 @@ export function clearStoredUser() {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('profile');
-}
-
-export function refreshToken() {
-  const REFRESH_TOKEN = store.getState().user.refreshToken;
-  if (REFRESH_TOKEN) {
-    axios
-      .post<{ token: string }>(
-        import.meta.env.VITE_API_URL + 'users/authenticate/refresh',
-        {
-          headers: {
-            authorization: 'Bearer ' + REFRESH_TOKEN,
-          },
-        }
-      )
-      .then(async (res) => {
-        storeToken(res.data.token);
-        store.dispatch(setToken({ token: res.data.token }));
-      })
-      .catch((err) => {
-        clearStoredUser();
-        store.dispatch(clearTokens());
-      });
-  } else {
-    clearStoredUser();
-    store.dispatch(clearTokens());
-  }
 }

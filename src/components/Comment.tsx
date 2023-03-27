@@ -15,34 +15,18 @@ interface IProps {
 
 const Comment = ({ comment }: IProps) => {
   const { profile } = useSelector(selectUser);
-  const { token } = useSelector(selectUser);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const removeComment = () => {
-    return api.delete(`comments/${comment._id}`, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    });
-  };
-
   const clickButton = () => {
-    removeComment()
+    api
+      .delete(`comments/${comment._id}`)
       .then((res) => {
         dispatch(removeCommentFromState({ id: comment._id }));
       })
       .catch((error) => {
-        if (error.response) {
-          if (error.response.status === StatusCodes.UNAUTHORIZED) {
-            removeComment()
-              .then((res) =>
-                dispatch(removeCommentFromState({ id: comment._id }))
-              )
-              .catch((err) => navigate('/login'));
-          }
-        }
+        console.log(error);
       });
   };
 

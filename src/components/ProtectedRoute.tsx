@@ -7,8 +7,8 @@ interface IProps {
 }
 
 const ProtectedRoute = ({ children }: IProps) => {
-  const { token } = useSelector(selectUser);
-  if (!token) return <Navigate to='/login' replace />;
+  const { profile } = useSelector(selectUser);
+  if (!profile) return <Navigate to='/login' replace />;
   return children;
 };
 

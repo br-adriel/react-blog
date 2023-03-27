@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import AuthFormLayout from '../components/AuthFormLayout';
 import Form from '../components/Form';
 import FormGroup from '../components/FormGroup';
-import { selectUser, setCredentials } from '../features/userSlice';
+import { selectUser, setProfile } from '../features/userSlice';
 import { api } from '../lib/axios';
-import { UserState } from '../types/userSlice';
+import { UserProfile } from '../types/userSlice';
 import { storeRefreshToken, storeToken, storeUserProfile } from '../utils/auth';
 
 const Login = () => {
@@ -21,16 +21,18 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const { data } = await api.post<UserState>('/users/authenticate', {
+      const { data } = await api.post<{
+        profile: UserProfile;
+        token: string;
+        refreshToken: string;
+      }>('/users/authenticate', {
         email,
         password,
       });
 
       if (data.token && data.refreshToken && data.profile) {
         dispatch(
-          setCredentials({
-            token: data.token,
-            refreshToken: data.refreshToken,
+          setProfile({
             profile: data.profile,
           })
         );
@@ -49,8 +51,8 @@ const Login = () => {
     }
   };
 
-  const { token } = useSelector(selectUser);
-  if (token) return <Navigate to='/' />;
+  const { profile } = useSelector(selectUser);
+  if (profile) return <Navigate to='/' />;
   return (
     <AuthFormLayout>
       <Content>

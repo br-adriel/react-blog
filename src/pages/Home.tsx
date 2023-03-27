@@ -11,7 +11,7 @@ import { GetPostsResponse } from '../types/responses';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
-  const [posts, setPosts] = useState<PostWithoutContent[] | null>(null);
+  const [posts, setPosts] = useState<PostWithoutContent[] | null | undefined>();
   const [prevLink, setPrevLink] = useState<string>();
   const [nextLink, setNextLink] = useState<string>();
 
@@ -31,22 +31,33 @@ const Home = () => {
   };
 
   useEffect(() => {
-    api.get<GetPostsResponse>(`posts?page=${pageNumber ?? 1}`).then((res) => {
-      setPosts(res.data.posts);
-      setPrevLink(res.data.prev);
-      setNextLink(res.data.next);
-    });
+    api
+      .get<GetPostsResponse>(`posts?page=${pageNumber ?? 1}`)
+      .then((res) => {
+        setPosts(res.data.posts);
+        setPrevLink(res.data.prev);
+        setNextLink(res.data.next);
+      })
+      .catch((err) => setPosts(null));
   }, []);
 
   return (
     <Section>
       <Wrapper>
         <h1>Posts</h1>
-        <PostGrid>
-          {posts?.map((post) => (
-            <Post post={post} key={post._id} />
-          ))}
-        </PostGrid>
+        {posts === undefined ? (
+          <h3>Carregando...</h3>
+        ) : posts === null ? (
+          <h3>Erro ao carregar posts</h3>
+        ) : !posts.length ? (
+          <h3>Nenhum post encontrado</h3>
+        ) : (
+          <PostGrid>
+            {posts?.map((post) => (
+              <Post post={post} key={post._id} />
+            ))}
+          </PostGrid>
+        )}
         <PaginationButtons
           prev={prevLink ? clickPrev : undefined}
           next={nextLink ? clickNext : undefined}

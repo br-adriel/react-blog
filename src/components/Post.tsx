@@ -84,6 +84,7 @@ const PostDate = styled.div`
   justify-content: center;
   gap: 2px;
   opacity: 0.65;
+  min-width: 20px;
 
   svg {
     width: 16px;

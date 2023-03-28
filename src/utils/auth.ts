@@ -1,3 +1,6 @@
+import { clearProfile } from '../features/userSlice';
+import { api } from '../lib/axios';
+import store from '../store';
 import { UserProfile } from '../types/userSlice';
 
 export function storeUserProfile(profile: UserProfile) {
@@ -34,4 +37,10 @@ export function clearStoredUser() {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('profile');
+}
+
+export async function logout() {
+  await api.post('/users/authenticate/logout');
+  store.dispatch(clearProfile());
+  clearStoredUser();
 }

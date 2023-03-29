@@ -184,9 +184,16 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
-
+    
     :hover {
       background-color: var(--secondary-color);
+    }
+  }
+  
+  a.btn {
+    &, &:hover, &:visited {
+      color: #fff;
+      text-decoration: none;
     }
   }
 `;

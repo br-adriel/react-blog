@@ -25,7 +25,10 @@ const api = axios.create({
 api.interceptors.response.use(
   (res) => res,
   (error: AxiosError) => {
-    if (error.response?.status === StatusCodes.UNAUTHORIZED) {
+    if (
+      error.response?.status === StatusCodes.UNAUTHORIZED &&
+      getStoredToken()
+    ) {
       const refreshToken = getStoredRefreshToken();
       const originalConfig: AxiosRequestConfig = error.config!;
 

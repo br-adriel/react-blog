@@ -1,28 +1,62 @@
+import {
+  BoxArrowRight,
+  CardHeading,
+  HouseFill,
+  PencilSquare,
+} from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { selectUser } from '../features/userSlice';
+import { logout } from '../utils/auth';
 import Container from './Container';
 
 const Header = () => {
   const { profile } = useSelector(selectUser);
 
-  if (!profile?.isAuthor) return null;
   return (
     <header>
       <Wrapper>
         <nav>
           <NavList>
-            <li>
-              <Link to='/posts/new' className='btn'>
-                Novo post
-              </Link>
-            </li>
-            <li>
-              <Link to='' className='btn'>
-                Gerenciar postagens
-              </Link>
-            </li>
+            <Link to='/' className='btn' title='Página inicial'>
+              <HouseFill />
+            </Link>
+            {profile && profile.isAuthor ? (
+              <>
+                <li>
+                  <Link to='/posts/new' className='btn' title='Novo post'>
+                    <PencilSquare />
+                  </Link>
+                </li>
+                <li>
+                  <Link to='' className='btn' title='Gerenciar postagens'>
+                    <CardHeading />
+                  </Link>
+                </li>
+              </>
+            ) : null}
+
+            {profile ? (
+              <li>
+                <button title='Sair' onClick={logout}>
+                  <BoxArrowRight />
+                </button>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link to='/login' className='btn'>
+                    Entrar
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/signup' className='btn'>
+                    Cadastrar-se
+                  </Link>
+                </li>
+              </>
+            )}
           </NavList>
         </nav>
       </Wrapper>
@@ -39,6 +73,10 @@ const Wrapper = styled(Container)`
 const NavList = styled.ul`
   display: flex;
   gap: 8px;
+
+  li {
+    display: flex;
+  }
 
   a,
   a:hover,

@@ -16,6 +16,7 @@ export interface PostWithoutContent {
   updatedAt: string;
   commentsCount: number;
   image?: string;
+  publishDate: string;
 }
 
 export interface PostWithContent extends PostWithoutContent {

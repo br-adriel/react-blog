@@ -9,6 +9,7 @@ import PostVisualizer from '../components/PostVisualizer';
 import { selectUser } from '../features/userSlice';
 import { api } from '../lib/axios';
 import { PostWithContent } from '../types/posts';
+import { Helmet } from 'react-helmet-async';
 
 const Post = () => {
   const [post, setPost] = useState<PostWithContent | null>();
@@ -47,25 +48,36 @@ const Post = () => {
       </Section>
     );
   return (
-    <Section>
-      <Wrapper>
-        <PostVisualizer post={post} />
-        <CommentSection>
-          <div>
-            {profile ? (
-              <CommentForm postId={post._id} />
-            ) : (
-              <div>
-                <h3>
-                  <Link to={'/login'}>Faça login</Link> para comentar
-                </h3>
-              </div>
-            )}
-          </div>
-          <Comments postId={post._id} />
-        </CommentSection>
-      </Wrapper>
-    </Section>
+    <main>
+      <Helmet>
+        <title>{post.title || 'Carregando post...'} - Blog</title>
+        <meta
+          name='description'
+          content={`Confira a postagem "${post.title}" de ${
+            post.author.firstName + ' ' + post.author.lastName
+          }`}
+        />
+      </Helmet>
+      <Section>
+        <Wrapper>
+          <PostVisualizer post={post} />
+          <CommentSection>
+            <div>
+              {profile ? (
+                <CommentForm postId={post._id} />
+              ) : (
+                <div>
+                  <h3>
+                    <Link to={'/login'}>Faça login</Link> para comentar
+                  </h3>
+                </div>
+              )}
+            </div>
+            <Comments postId={post._id} />
+          </CommentSection>
+        </Wrapper>
+      </Section>
+    </main>
   );
 };
 

@@ -1,6 +1,5 @@
 import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { addComment } from '../features/commentsSlice';
 import { selectUser } from '../features/userSlice';
@@ -18,7 +17,6 @@ const CommentForm = ({ postId }: IProps) => {
   const [content, setContent] = useState('');
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,9 +29,7 @@ const CommentForm = ({ postId }: IProps) => {
         setContent('');
         dispatch(addComment(res.data.comment));
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   return (

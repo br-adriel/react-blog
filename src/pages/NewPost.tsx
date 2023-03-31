@@ -1,4 +1,3 @@
-import { Editor } from '@tinymce/tinymce-react';
 import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,11 +5,9 @@ import { Editor as TinyMCEEditor } from 'tinymce';
 import Container from '../components/Container';
 import Form from '../components/Form';
 import FormGroup from '../components/FormGroup';
-import Switch from '../components/Switch';
 import SwitchInput from '../components/SwitchInput';
 import TextEditor from '../components/TextEditor';
 import { api } from '../lib/axios';
-import { initSettings } from '../lib/tinyMCE';
 
 const NewPost = () => {
   const [title, setTitle] = useState<string>('');

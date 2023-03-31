@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Container from '../components/Container';
@@ -44,6 +45,10 @@ const ManagePosts = () => {
   if (posts === undefined)
     return (
       <Main>
+        <Helmet>
+          <title>Gerenciar postagens - Blog</title>
+          <meta name='description' content='Gerencie suas postagens no blog' />
+        </Helmet>
         <Wrapper>
           <h2>Gerenciar postagens</h2>
           <h3>Carregando...</h3>
@@ -53,6 +58,10 @@ const ManagePosts = () => {
   if (posts === null)
     return (
       <Main>
+        <Helmet>
+          <title>Gerenciar postagens - Blog</title>
+          <meta name='description' content='Gerencie suas postagens no blog' />
+        </Helmet>
         <Wrapper>
           <h2>Gerenciar postagens</h2>
           <h3>Erro ao carregar postagens</h3>
@@ -61,6 +70,10 @@ const ManagePosts = () => {
     );
   return (
     <Main>
+      <Helmet>
+        <title>Gerenciar postagens - Blog</title>
+        <meta name='description' content='Gerencie suas postagens no blog' />
+      </Helmet>
       <Wrapper>
         <h2>Gerenciar postagens</h2>
         <PostsList posts={posts} />

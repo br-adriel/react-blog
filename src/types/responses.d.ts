@@ -1,5 +1,5 @@
 import { Comment } from './comments';
-import { PostWithoutContent } from './posts';
+import { PostWithContent, PostWithoutContent } from './posts';
 
 export interface GetPostsResponse {
   posts: PostWithoutContent[];
@@ -13,4 +13,8 @@ export interface GetCommentsResponse {
   page: number;
   prev?: string;
   next?: string;
+}
+
+export interface GetPostResponse {
+  post: PostWithContent;
 }

@@ -15,7 +15,7 @@ export interface PostWithoutContent {
   createdAt: string;
   updatedAt: string;
   commentsCount: number;
-  image?: string;
+  image: string;
   publishDate: string;
 }
 

@@ -9,7 +9,11 @@ const AuthFormLayout = ({ children }: IProps) => {
   return (
     <Wrapper>
       {children}
-      <img src='/img/auth_ilustration.svg' alt='' width={750} />
+      <img
+        src={`${import.meta.env.BASE_URL}/img/auth_ilustration.svg`}
+        alt=''
+        width={750}
+      />
     </Wrapper>
   );
 };

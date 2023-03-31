@@ -104,6 +104,10 @@ const PostContent = styled.div`
     font-size: 1rem;
     font-weight: 600;
   }
+
+  p {
+    margin-bottom: 12px;
+  }
 `;
 
 export default PostVisualizer;

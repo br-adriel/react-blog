@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
 import { RootState } from '../store';
 import { Comment } from '../types/comments';
-import { CommentsState } from '../types/commentsSlice';
+import { CommentsState } from '../types/features/commentsSlice';
 
 const initialState: CommentsState = {
   comments: undefined,

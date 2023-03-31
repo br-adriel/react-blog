@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction } from '@reduxjs/toolkit/dist/createAction';
 import { RootState } from '../store';
-import { UserProfile, UserState } from '../types/userSlice';
+import { UserProfile, UserState } from '../types/features/userSlice';
 
 const initialState: UserState = {
   profile: null,

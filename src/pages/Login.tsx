@@ -8,7 +8,7 @@ import Form from '../components/Form';
 import FormGroup from '../components/FormGroup';
 import { selectUser, setProfile } from '../features/userSlice';
 import { api } from '../lib/axios';
-import { UserProfile } from '../types/userSlice';
+import { UserProfile } from '../types/features/userSlice';
 import { storeRefreshToken, storeToken, storeUserProfile } from '../utils/auth';
 
 const Login = () => {

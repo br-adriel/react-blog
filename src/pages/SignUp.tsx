@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,9 +8,8 @@ import Form from '../components/Form';
 import FormGroup from '../components/FormGroup';
 import { selectUser, setProfile } from '../features/userSlice';
 import { api } from '../lib/axios';
-import { UserProfile } from '../types/userSlice';
+import { UserProfile } from '../types/features/userSlice';
 import { storeRefreshToken, storeToken, storeUserProfile } from '../utils/auth';
-import { Helmet } from 'react-helmet-async';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');

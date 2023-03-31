@@ -1,7 +1,7 @@
 import { clearProfile } from '../features/userSlice';
 import { api } from '../lib/axios';
 import store from '../store';
-import { UserProfile } from '../types/userSlice';
+import { UserProfile } from '../types/features/userSlice';
 
 export function storeUserProfile(profile: UserProfile) {
   const stringProfile = JSON.stringify(profile);

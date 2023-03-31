@@ -713,6 +713,10 @@ Error generating stack: `+i.message+`
     font-size: 1rem;
     font-weight: 600;
   }
+
+  p {
+    margin-bottom: 12px;
+  }
 `,gP=()=>{const[e,t]=S.useState(),{profile:n}=Ut(jn),{id:r}=bv();return S.useEffect(()=>{r&&ze.get(`posts/${r}`).then(o=>{const i=o.data.post;t(i)}).catch(o=>{t(null)})},[r]),e===void 0?E(Ou,{children:E(Cu,{children:E("h2",{children:"Carregando..."})})}):e===null?E(Ou,{children:E(Cu,{children:E("h2",{children:"Post não encontrado"})})}):U("main",{children:[U(gt,{children:[U("title",{children:[e.title||"Carregando post..."," - Blog"]}),E("meta",{name:"description",content:`Confira a postagem "${e.title}" de ${e.author.firstName+" "+e.author.lastName}`})]}),E(Ou,{children:U(Cu,{children:[E(cP,{post:e}),U(yP,{children:[E("div",{children:n?E(ZC,{postId:e._id}):E("div",{children:U("h3",{children:[E(Lt,{to:"/login",children:"Faça login"})," para comentar"]})})}),E(lP,{postId:e._id})]})]})})]})},Ou=Z.section`
   padding: 16px;
 `,Cu=Z(nr)`

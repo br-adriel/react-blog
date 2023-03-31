@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import { Pen, Trash2Fill, Upload } from 'react-bootstrap-icons';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { removePost as removePostFromState } from '../features/postManagementSlice';
 import { api } from '../lib/axios';
 import { PostWithoutContent } from '../types/posts';
 
@@ -10,12 +12,19 @@ interface IProps {
 }
 
 const PostManageCard = ({ post }: IProps) => {
+  const dipatch = useDispatch();
+
   const publishPost = () => {
     api.patch(`posts/${post._id}/publish`).then().catch();
   };
 
   const removePost = () => {
-    api.delete(`posts/${post._id}`).then().catch();
+    api
+      .delete(`posts/${post._id}`)
+      .then((res) => {
+        dipatch(removePostFromState({ id: post._id }));
+      })
+      .catch();
   };
 
   return (

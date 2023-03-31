@@ -18,7 +18,10 @@ const postManagementSlice = createSlice({
         state.posts = state.posts.filter((p) => p._id !== action.payload.id);
       }
     },
-    setPosts(state, action: PayloadAction<{ posts: PostWithoutContent[] }>) {
+    setPosts(
+      state,
+      action: PayloadAction<{ posts: PostWithoutContent[] | null }>
+    ) {
       state.posts = action.payload.posts;
     },
     setPaginationLinks(

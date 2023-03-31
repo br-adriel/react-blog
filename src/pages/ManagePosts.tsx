@@ -1,44 +1,61 @@
 import { AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Container from '../components/Container';
 import PaginationButtons from '../components/PaginationButtons';
 import PostsList from '../components/PostsList';
+import {
+  selectPostManagement,
+  setPaginationLinks,
+  setPosts,
+} from '../features/postManagementSlice';
 import { selectUser } from '../features/userSlice';
-import { PostWithoutContent } from '../types/posts';
 import { GetPostsResponse } from '../types/responses';
 import { getPosts } from '../utils/fetchDocuments';
 
 const ManagePosts = () => {
   const { profile } = useSelector(selectUser);
+  const dispatch = useDispatch();
 
-  const [posts, setPosts] = useState<PostWithoutContent[] | null | undefined>();
-  const [prevLink, setPrevLink] = useState<string>();
-  const [nextLink, setNextLink] = useState<string>();
+  const { prev, next, posts } = useSelector(selectPostManagement);
 
   const updateStatesWithRes = (res: AxiosResponse<GetPostsResponse>) => {
-    setPosts(res.data.posts);
-    setNextLink(res.data.next);
-    setPrevLink(res.data.prev);
+    dispatch(
+      setPosts({
+        posts: res.data.posts,
+      })
+    );
+    dispatch(
+      setPaginationLinks({
+        next: res.data.next ?? null,
+        prev: res.data.prev ?? null,
+      })
+    );
   };
 
   const clickPrev = () => {
-    if (prevLink) {
-      getPosts(prevLink, updateStatesWithRes, () => setPosts(null));
+    if (prev) {
+      getPosts(prev, updateStatesWithRes, () =>
+        dispatch(setPosts({ posts: null }))
+      );
     }
   };
 
   const clickNext = () => {
-    if (nextLink) {
-      getPosts(nextLink, updateStatesWithRes, () => setPosts(null));
+    if (next) {
+      getPosts(next, updateStatesWithRes, () =>
+        dispatch(setPosts({ posts: null }))
+      );
     }
   };
 
   useEffect(() => {
     if (profile && (profile.isAdmin || profile.isAuthor)) {
-      getPosts('posts/manage', updateStatesWithRes, () => setPosts(null));
+      getPosts('posts/manage', updateStatesWithRes, () =>
+        dispatch(setPosts({ posts: null }))
+      );
     }
   }, []);
 
@@ -78,8 +95,8 @@ const ManagePosts = () => {
         <h2>Gerenciar postagens</h2>
         <PostsList posts={posts} />
         <PaginationButtons
-          prev={prevLink ? clickPrev : undefined}
-          next={nextLink ? clickNext : undefined}
+          prev={prev ? clickPrev : undefined}
+          next={next ? clickNext : undefined}
         />
       </Wrapper>
     </Main>

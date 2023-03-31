@@ -33,7 +33,11 @@ const PostManageCard = ({ post }: IProps) => {
             <Upload />
           </button>
         )}
-        <Link className='btn' to='' title='Editar post'>
+        <Link
+          className='btn'
+          to={`/posts/${post._id}/edit`}
+          title='Editar post'
+        >
           <Pen />
         </Link>
         <button type='button' title='Apagar post' onClick={removePost}>

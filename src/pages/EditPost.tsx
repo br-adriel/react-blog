@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Editor as TinyMCEEditor } from 'tinymce';
@@ -64,6 +65,10 @@ const EditPost = () => {
   }
   return (
     <Main>
+      <Helmet>
+        <title>Editar postagem - Blog</title>
+        <meta name='description' content='Edite uma postagem do blog' />
+      </Helmet>
       <Wrapper>
         <h2>Editar postagem</h2>
         <Form onSubmit={updatePost}>

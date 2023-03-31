@@ -1,44 +1,39 @@
+import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Container from '../components/Container';
 import PaginationButtons from '../components/PaginationButtons';
 import Post from '../components/Post';
 import PostGrid from '../components/PostGrid';
-import { api } from '../lib/axios';
 import { PostWithoutContent } from '../types/posts';
 import { GetPostsResponse } from '../types/responses';
+import { getPosts } from '../utils/fetchDocuments';
 
 const Home = () => {
-  const [searchParams] = useSearchParams();
   const [posts, setPosts] = useState<PostWithoutContent[] | null | undefined>();
   const [prevLink, setPrevLink] = useState<string>();
   const [nextLink, setNextLink] = useState<string>();
 
-  const pageNumber = searchParams.get('page');
-  const navigate = useNavigate();
+  const updateStatesWithRes = (res: AxiosResponse<GetPostsResponse>) => {
+    setPosts(res.data.posts);
+    setNextLink(res.data.next);
+    setPrevLink(res.data.prev);
+  };
 
   const clickPrev = () => {
     if (prevLink) {
-      navigate(prevLink);
+      getPosts(prevLink, updateStatesWithRes, () => setPosts(null));
     }
   };
 
   const clickNext = () => {
     if (nextLink) {
-      navigate(nextLink);
+      getPosts(nextLink, updateStatesWithRes, () => setPosts(null));
     }
   };
 
   useEffect(() => {
-    api
-      .get<GetPostsResponse>(`posts?page=${pageNumber ?? 1}`)
-      .then((res) => {
-        setPosts(res.data.posts);
-        setPrevLink(res.data.prev);
-        setNextLink(res.data.next);
-      })
-      .catch((err) => setPosts(null));
+    getPosts(`/posts`, updateStatesWithRes, (err) => setPosts(null));
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -54,42 +55,51 @@ const Login = () => {
   const { profile } = useSelector(selectUser);
   if (profile) return <Navigate to='/' />;
   return (
-    <AuthFormLayout>
-      <Content>
-        <h2>Entrar</h2>
-        <Form onSubmit={formSubmit}>
-          <FormGroup>
-            <label htmlFor='email'>Email:</label>
-            <input
-              type='email'
-              name='email'
-              id='email'
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label htmlFor='password'>Senha:</label>
-            <input
-              type='password'
-              name='password'
-              id='password'
-              required
-              minLength={8}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <p>
-              Não tem uma conta? <Link to='/signup'>Cadastre-se</Link>!
-            </p>
-          </FormGroup>
-          <button type='submit'>Entrar</button>
-        </Form>
-      </Content>
-    </AuthFormLayout>
+    <>
+      <Helmet>
+        <title>Login - Blog</title>
+        <meta
+          name='description'
+          content='Entre com sua conta para comentar nas postagens'
+        />
+      </Helmet>
+      <AuthFormLayout>
+        <Content>
+          <h2>Entrar</h2>
+          <Form onSubmit={formSubmit}>
+            <FormGroup>
+              <label htmlFor='email'>Email:</label>
+              <input
+                type='email'
+                name='email'
+                id='email'
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor='password'>Senha:</label>
+              <input
+                type='password'
+                name='password'
+                id='password'
+                required
+                minLength={8}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <p>
+                Não tem uma conta? <Link to='/signup'>Cadastre-se</Link>!
+              </p>
+            </FormGroup>
+            <button type='submit'>Entrar</button>
+          </Form>
+        </Content>
+      </AuthFormLayout>
+    </>
   );
 };
 

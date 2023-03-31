@@ -9,6 +9,7 @@ import { selectUser, setProfile } from '../features/userSlice';
 import { api } from '../lib/axios';
 import { UserProfile } from '../types/userSlice';
 import { storeRefreshToken, storeToken, storeUserProfile } from '../utils/auth';
+import { Helmet } from 'react-helmet-async';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -57,76 +58,85 @@ const SignUp = () => {
   const { profile } = useSelector(selectUser);
   if (profile) return <Navigate to='/' />;
   return (
-    <AuthFormLayout>
-      <Content>
-        <h2>Cadastrar-se</h2>
-        <Form onSubmit={formSubmit}>
-          <FormGroup>
-            <label htmlFor='email'>Email:</label>
-            <input
-              type='email'
-              name='email'
-              id='email'
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label htmlFor='firstName'>Nome:</label>
-            <input
-              type='text'
-              name='firstName'
-              id='firstName'
-              required
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label htmlFor='lastName'>Sobrenome:</label>
-            <input
-              type='text'
-              name='lastName'
-              id='lastName'
-              required
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label htmlFor='password'>Senha:</label>
-            <input
-              type='password'
-              name='password'
-              id='password'
-              required
-              minLength={8}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label htmlFor='password2'>Confirmação de senha:</label>
-            <input
-              type='password'
-              name='password2'
-              id='password2'
-              required
-              minLength={8}
-              value={password2}
-              onChange={(e) => setPassword2(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <p>
-              Já tem uma conta? <Link to='/login'>Faça login</Link>!
-            </p>
-          </FormGroup>
-          <button type='submit'>Cadastrar-se</button>
-        </Form>
-      </Content>
-    </AuthFormLayout>
+    <>
+      <Helmet>
+        <title>Criar perfil - Blog</title>
+        <meta
+          name='description'
+          content='Crie uma conta para comentar nos posts'
+        />
+      </Helmet>
+      <AuthFormLayout>
+        <Content>
+          <h1>Criar perfil</h1>
+          <Form onSubmit={formSubmit}>
+            <FormGroup>
+              <label htmlFor='email'>Email:</label>
+              <input
+                type='email'
+                name='email'
+                id='email'
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor='firstName'>Nome:</label>
+              <input
+                type='text'
+                name='firstName'
+                id='firstName'
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor='lastName'>Sobrenome:</label>
+              <input
+                type='text'
+                name='lastName'
+                id='lastName'
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor='password'>Senha:</label>
+              <input
+                type='password'
+                name='password'
+                id='password'
+                required
+                minLength={8}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <label htmlFor='password2'>Confirmação de senha:</label>
+              <input
+                type='password'
+                name='password2'
+                id='password2'
+                required
+                minLength={8}
+                value={password2}
+                onChange={(e) => setPassword2(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <p>
+                Já tem uma conta? <Link to='/login'>Faça login</Link>!
+              </p>
+            </FormGroup>
+            <button type='submit'>Cadastrar-se</button>
+          </Form>
+        </Content>
+      </AuthFormLayout>
+    </>
   );
 };
 

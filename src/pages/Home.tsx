@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import Container from '../components/Container';
 import PaginationButtons from '../components/PaginationButtons';
@@ -37,28 +38,37 @@ const Home = () => {
   }, []);
 
   return (
-    <Section>
-      <Wrapper>
-        <h1>Posts</h1>
-        {posts === undefined ? (
-          <h3>Carregando...</h3>
-        ) : posts === null ? (
-          <h3>Erro ao carregar posts</h3>
-        ) : !posts.length ? (
-          <h3>Nenhum post encontrado</h3>
-        ) : (
-          <PostGrid>
-            {posts?.map((post) => (
-              <Post post={post} key={post._id} />
-            ))}
-          </PostGrid>
-        )}
-        <PaginationButtons
-          prev={prevLink ? clickPrev : undefined}
-          next={nextLink ? clickNext : undefined}
+    <main>
+      <Helmet>
+        <title>Posts - Blog</title>
+        <meta
+          name='description'
+          content='Confira as últimas postagens no blog'
         />
-      </Wrapper>
-    </Section>
+      </Helmet>
+      <Section>
+        <Wrapper>
+          <h1>Posts</h1>
+          {posts === undefined ? (
+            <h3>Carregando...</h3>
+          ) : posts === null ? (
+            <h3>Erro ao carregar posts</h3>
+          ) : !posts.length ? (
+            <h3>Nenhum post encontrado</h3>
+          ) : (
+            <PostGrid>
+              {posts?.map((post) => (
+                <Post post={post} key={post._id} />
+              ))}
+            </PostGrid>
+          )}
+          <PaginationButtons
+            prev={prevLink ? clickPrev : undefined}
+            next={nextLink ? clickNext : undefined}
+          />
+        </Wrapper>
+      </Section>
+    </main>
   );
 };
 

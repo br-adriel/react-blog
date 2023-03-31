@@ -4,6 +4,7 @@ import App from './App';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import ManagePosts from './pages/ManagePosts';
 import NewPost from './pages/NewPost';
 import Post from './pages/Post';
 import SignUp from './pages/SignUp';
@@ -21,6 +22,14 @@ const RouteHandler = () => {
             element={
               <ProtectedRoute mustBeAuthor>
                 <NewPost />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/posts/manage'
+            element={
+              <ProtectedRoute mustBeAdminOrAuthor>
+                <ManagePosts />
               </ProtectedRoute>
             }
           />

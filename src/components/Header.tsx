@@ -30,7 +30,11 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to='' className='btn' title='Gerenciar postagens'>
+                  <Link
+                    to='/posts/manage'
+                    className='btn'
+                    title='Gerenciar postagens'
+                  >
                     <CardHeading />
                   </Link>
                 </li>

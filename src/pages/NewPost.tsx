@@ -8,6 +8,7 @@ import FormGroup from '../components/FormGroup';
 import SwitchInput from '../components/SwitchInput';
 import TextEditor from '../components/TextEditor';
 import { api } from '../lib/axios';
+import { Helmet } from 'react-helmet-async';
 
 const NewPost = () => {
   const [title, setTitle] = useState<string>('');
@@ -42,6 +43,10 @@ const NewPost = () => {
 
   return (
     <Main>
+      <Helmet>
+        <title>Nova postagem - Blog</title>
+        <meta name='description' content='Crie uma nova postagem' />
+      </Helmet>
       <Wrapper>
         <h2>Nova postagem</h2>
         <Form onSubmit={createPost}>

@@ -58,7 +58,7 @@ const SignUp = () => {
   const { profile } = useSelector(selectUser);
   if (profile) return <Navigate to='/' />;
   return (
-    <>
+    <main>
       <Helmet>
         <title>Criar perfil - Blog</title>
         <meta
@@ -136,7 +136,7 @@ const SignUp = () => {
           </Form>
         </Content>
       </AuthFormLayout>
-    </>
+    </main>
   );
 };
 

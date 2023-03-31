@@ -55,7 +55,7 @@ const Login = () => {
   const { profile } = useSelector(selectUser);
   if (profile) return <Navigate to='/' />;
   return (
-    <>
+    <main>
       <Helmet>
         <title>Login - Blog</title>
         <meta
@@ -99,7 +99,7 @@ const Login = () => {
           </Form>
         </Content>
       </AuthFormLayout>
-    </>
+    </main>
   );
 };
 
